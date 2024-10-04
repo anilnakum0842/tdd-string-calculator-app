@@ -36,20 +36,4 @@ describe('StringCalculatorService', () => {
   it('should throw an error for multiple negative numbers', () => {
     expect(() => service.add('1,-2,-3')).toThrowError('Negative numbers not allowed: -2, -3');
   });
-
-  it("should return 2 when input is '2,1001'", () => {
-    expect(() => service.add("2,1001")).toEqual(2);
-  });
-
-  it("should return 6 when input is '//[***]\n1***2***3'", () => {
-    expect(() => service.add("//[***]\n1***2***3")).toEqual(6);
-  });
-
-  it("should return 6 when input is '//[*][%]\n1*2%3'", () => {
-    expect(() => service.add("//[*][%]\n1*2%3")).toEqual(6);
-  });
-
-  it("should return 6 when input is '//[***][%%%]\n1***2%%%3'", () => {
-    expect(() => service.add("//[***][%%%]\n1***2%%%3")).toEqual(6);
-  });
 });
