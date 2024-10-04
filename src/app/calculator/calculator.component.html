@@ -1,7 +1,13 @@
-<div>
-    <h2>String Calculator</h2>
-    <input [(ngModel)]="inputString" placeholder="Enter numbers (e.g., 1,2)" />
-    <button (click)="calculate()">Calculate</button>
-    <p>Result: {{ result }}</p>
-  </div>
-  
+<div class="container">
+    <div class="row justify-content-md-center">
+        <div class="col-md-6 text-center">
+            <h2 class="main-title">String Calculator</h2>
+            <hr>
+            <label class="form-label">Enter String For Calculate</label>
+            <input class="form-control" [(ngModel)]="inputString" placeholder="Enter numbers (e.g., 1,2)" />
+            <button class="btn btn-info mt-3" (click)="calculate()">Calculate</button>
+            <hr><hr>
+            <p class="result"><b>Result : </b> {{ result }}</p>
+        </div>
+    </div>
+</div>

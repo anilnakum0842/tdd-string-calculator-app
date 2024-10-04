@@ -12,15 +12,29 @@ export class StringCalculatorService {
 
     let delimiter = /,|\\n/; // Default delimiters: comma or newline
 
-    // Check for custom delimiters
-    if (numbers.startsWith("//")) {
-       // Handle delimiter like //;\n
-       const DelimiterMatch = numbers.match(/^\/\/(.)\\n/);
-       if (DelimiterMatch) {
-           delimiter = new RegExp(DelimiterMatch[1]);
-           numbers = numbers.slice(DelimiterMatch[0].length);
-       }
+   // Check for custom delimiters
+   if (numbers.startsWith("//")) {
+    const multiDelimiterMatch = numbers.match(/^\/\/(\[.*\])\\n/);
+    if (multiDelimiterMatch) {
+        // Handle multiple or long custom delimiters like //[delim1][delim2]
+        const customDelimiters = multiDelimiterMatch[1]
+            .split('][')                  // Split delimiters by ']['
+            .map(d => d.replace(/[\[\]]/g, '')) // Remove brackets from each delimiter
+            .map(d => d.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')); // Escape special regex chars
+
+        // Create a dynamic regex for delimiters
+        delimiter = new RegExp(customDelimiters.join('|'));
+        numbers = numbers.slice(multiDelimiterMatch[0].length);
+    } else {
+        // Handle single-character delimiter like //;\n
+        const singleDelimiterMatch = numbers.match(/^\/\/(.)\\n/);
+        if (singleDelimiterMatch) {
+            delimiter = new RegExp(singleDelimiterMatch[1]);
+            numbers = numbers.slice(singleDelimiterMatch[0].length);
+        }
     }
+}
+
     // Split string using the delimiter and remove empty entries
     const numArray = numbers.split(delimiter).filter(num => num.trim() !== "");
 
